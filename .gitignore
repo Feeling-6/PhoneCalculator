@@ -1,0 +1,57 @@
+# ==============
+# Qt / C++
+# ==============
+
+# 构建目录
+# (匹配 build, build-debug, build-release 等)
+build/
+build-*/
+
+# Qt Creator / 用户特定文件
+# (这些文件包含您本地的IDE配置，不应共享)
+*.pro.user
+*.pro.user.*
+.qtcreator/
+.qtcreator.user
+.qtcreator.user.*
+
+# 编译产物 (目标文件)
+*.o
+*.obj
+
+# 链接产物 (可执行文件, 库)
+*.app/
+*.exe
+*.dll
+*.so
+*.dylib
+*.a
+*.lib
+
+# qmake 和 Makefile 生成文件
+Makefile
+Makefile.*
+.qmake.stash
+
+# Qt Meta-Object Compiler (MOC) 生成文件
+moc_*.cpp
+moc_*.h
+moc_*.o
+
+# Qt User Interface Compiler (UIC) 生成文件
+ui_*.h
+
+# Qt Resource Compiler (RCC) 生成文件
+qrc_*.cpp
+
+# 编译缓存和中间文件
+.cache/
+compile_commands.json
+*.gch
+*.pch
+
+# ==============
+# 操作系统 / 通用
+# ==============
+.DS_Store
+Thumbs.db
