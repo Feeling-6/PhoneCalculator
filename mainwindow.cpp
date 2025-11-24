@@ -50,7 +50,7 @@ void MainWindow::on_input_button_clicked()
     // 我们就用新按键替换它
     if (currentText == "" && buttonText != ".") {
         ui->displayLineEdit->setText(buttonText);
-    } else if (currentText == "Error") {
+    } else if (currentText == "Error" || currentText == "undefined") {
         ui->displayLineEdit->setText(buttonText);
     }
     // 否则，直接在末尾追加
