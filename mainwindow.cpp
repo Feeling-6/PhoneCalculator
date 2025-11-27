@@ -120,8 +120,10 @@ void MainWindow::on_equals_clicked()
 {
     // 1. 获取完整的表达式
     QString expression = ui->displayLineEdit->text();
-    //如果表达式是空的直接结束
+    //如果表达式是空,或者最后一位是运算符就直接结束
     if(expression.isEmpty()){
+        return;
+    } else if(expression.right(1) == "+" || expression.right(1) == "-" || expression.right(1) == "x" || expression.right(1) == "÷") {
         return;
     }
 

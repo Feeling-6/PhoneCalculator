@@ -9,8 +9,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>226</width>
-    <height>347</height>
+    <width>229</width>
+    <height>356</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -51,6 +51,12 @@ QPushButton:pressed {
 }</string>
    </property>
    <layout class="QGridLayout" name="gridLayout">
+    <property name="horizontalSpacing">
+     <number>15</number>
+    </property>
+    <property name="verticalSpacing">
+     <number>25</number>
+    </property>
     <item row="3" column="3">
      <widget class="QPushButton" name="multiply">
       <property name="sizePolicy">
