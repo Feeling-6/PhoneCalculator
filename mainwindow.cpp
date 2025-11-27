@@ -39,24 +39,33 @@ void MainWindow::on_input_button_clicked()
 {
     //获取信号
     QPushButton *clickedButton = qobject_cast<QPushButton*>(sender());
-    if (!clickedButton)
-        return;
+    if (!clickedButton) return;
     //获取按钮文本
     QString buttonText = clickedButton->text();
+    if (buttonText.isEmpty()) return;
     //获取显示框当前内容
     QString currentText = ui->displayLineEdit->text();
 
-    // 如果当前显示的是 "" 或 "Error"
-    // 我们就用新按键替换它
-    if (currentText == "" && buttonText != ".") {
-        ui->displayLineEdit->setText(buttonText);
-    } else if (currentText == "Error" || currentText == "undefined") {
-        ui->displayLineEdit->setText(buttonText);
+    // 当前显示为空（""）、"Error"直接替换
+    if (currentText.isEmpty() || currentText == "Error") {
+        //如果按钮是小数点，前面加 "0"
+        if (buttonText == ".") {
+            ui->displayLineEdit->setText("0.");
+        } else {
+            ui->displayLineEdit->setText(buttonText);
+        }
+        return;
     }
-    // 否则，直接在末尾追加
-    else {
-        ui->displayLineEdit->setText(currentText + buttonText);
+    //安全获取最后一个字符
+    QString lastString = currentText.right(1);
+    //如果最后一个字符是运算符，再输入运算符的时候就替换掉
+    if ((lastString == "+" || lastString == "-" || lastString == "x" || lastString == "÷")
+        && (buttonText == "+" || buttonText == "-" || buttonText == "x" || buttonText == "÷")) {
+        ui->displayLineEdit->setText(currentText.chopped(1) + buttonText);
+        return;
     }
+    //其他情况，直接输入
+    ui->displayLineEdit->setText(currentText + buttonText);
 }
 
 //清空按钮
@@ -68,14 +77,23 @@ void MainWindow::on_AC_clicked()
 //删除按钮
 void MainWindow::on_Del_clicked()
 {
+    //获取显示框当前内容
+    QString currentText = ui->displayLineEdit->text();
+    if(currentText == "Error"){
+        ui->displayLineEdit->setText("");
+    }
     ui->displayLineEdit->backspace();
 }
 
-
+//这个函数是ai写的
 void MainWindow::on_equals_clicked()
 {
     // 1. 获取完整的表达式
     QString expression = ui->displayLineEdit->text();
+    //如果表达式是空的直接结束
+    if(expression.isEmpty()){
+        return;
+    }
 
     // 2.替换UI符号为 JavaScript 认识的符号
     expression.replace("x", "*");
