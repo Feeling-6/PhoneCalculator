@@ -17,6 +17,10 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
+protected:
+    // 声明重写“窗口大小改变”事件
+    void resizeEvent(QResizeEvent *event) override;
+
 private slots:
     void on_AC_clicked();//清空
 

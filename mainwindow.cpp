@@ -1,6 +1,7 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include <QJSEngine>
+#include <QResizeEvent>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -32,6 +33,35 @@ MainWindow::MainWindow(QWidget *parent)
 MainWindow::~MainWindow()
 {
     delete ui;
+}
+
+void MainWindow::resizeEvent(QResizeEvent *event)
+{
+    // 1. 调用父类处理，保证布局正常计算
+    QMainWindow::resizeEvent(event);
+
+    // 2. 根据窗口当前高度动态计算字号
+    // 系数 0.05 意味着字体大小占窗口高度的 5%，你可以根据实际效果调整这个数字(比如 0.04 或 0.06)
+    int h = this->height();
+    int newFontSize = h * 0.05;
+
+    // 限制最小字号为 12px，防止缩得太小看不见
+    if (newFontSize < 12) newFontSize = 12;
+
+    // 3. 自动查找界面上所有的按钮并设置新字体
+    const QList<QPushButton*> buttons = this->findChildren<QPushButton*>();
+    for (QPushButton *btn : buttons) {
+        QFont f = btn->font();
+        f.setPixelSize(newFontSize); // 使用像素大小设置
+        btn->setFont(f);
+    }
+
+    // 4. 单独设置显示屏的字体 (通常比按钮大一点)
+    if (ui->displayLineEdit) {
+        QFont f = ui->displayLineEdit->font();
+        f.setPixelSize(newFontSize + 18); // 比按钮大 18px
+        ui->displayLineEdit->setFont(f);
+    }
 }
 
 //公共槽函数
